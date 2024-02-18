@@ -1,7 +1,12 @@
 name: Check
 
-on: push
-#on: pull_request
+on:
+  pull_request:
+    types:
+      - opened
+    branches:
+      - 'main'
+  push:
 
 jobs:
   check:
@@ -27,7 +32,7 @@ jobs:
           OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
           HETZNER_API_KEY: op://svc/hetzner_dns_api_key/password
 
-      - name: DNSControl check
+      - name: DNSControl preview
         uses: koenrh/dnscontrol-action@v3
         with:
           args: preview
