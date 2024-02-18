@@ -2,6 +2,12 @@ name: Preview
 
 on:
   pull_request:
+    types:
+      - opened
+      - reopend
+      - synchronize
+    branches:
+      - 'main'
 
 jobs:
   preview:
