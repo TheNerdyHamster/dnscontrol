@@ -1,0 +1,38 @@
+name: Preview
+
+on:
+  pull_request:
+    types:
+      - opened
+    branches:
+      - 'main'
+
+jobs:
+  preview:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Load secret
+        uses: 1password/load-secrets-action@v1
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          HETZNER_API_KEY: op://svc/hetzner_dns_api_key/password
+
+      - name: DNSControl preview
+        uses: koenrh/dnscontrol-action@v3
+        with:
+          args: preview
+
+      - name: Preview pull request comment
+        uses: unsplash/comment-on-pr@v1.3.0
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+        with:
+          msg: |
+            ```
+            ${{ steps.dnscontrol_preview.outputs.preview_comment }}
+            ```
+        check_for_duplicate_msg: true
