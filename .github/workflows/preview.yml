@@ -1,0 +1,23 @@
+name: Preview
+
+on: push
+#on: pull_request
+
+jobs:
+  check:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v3
+
+      - name: Load secret
+        uses: 1password/load-secrets-action@v1
+        with:
+          export-env: true
+        env:
+          OP_SERVICE_ACCOUNT_TOKEN: ${{ secrets.OP_SERVICE_ACCOUNT_TOKEN }}
+          HETZNER_API_KEY: op://svc/hetzner_dns_api_key/password
+
+      - name: DNSControl check
+        uses: koenrh/dnscontrol-action@v3
+        with:
+          args: preview
