@@ -5,7 +5,7 @@ var DSP_HETZNER = NewDnsProvider("hetzner");
 
 DEFAULTS(DefaultTTL("1h"), NAMESERVER_TTL("30m"))
 
-D("letnh.com", REG_NONE, DnsProvider(DSP_HETZNER)
+D("letnh.com", REG_NONE, DnsProvider(DSP_HETZNER),
   A("@", "1.1.1.1"),
 );
 
