@@ -27,15 +27,4 @@ jobs:
       - name: DNSControl preview
         uses: koenrh/dnscontrol-action@v3
         with:
-          args: preview
-
-      - name: Preview pull request comment
-        uses: unsplash/comment-on-pr@v1.3.0
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-        with:
-          msg: |
-            ```
-            ${{ steps.dnscontrol_preview.outputs.preview_comment }}
-            ```
-          check_for_duplicate_msg: true
+          args: preview --diff2
