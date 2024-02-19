@@ -27,4 +27,4 @@ jobs:
       - name: DNSControl preview
         uses: koenrh/dnscontrol-action@v3
         with:
-          args: preview --diff2
+          args: --diff2 preview
