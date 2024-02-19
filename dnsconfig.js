@@ -15,23 +15,65 @@ var SPF = SPF_BUILDER({
   ]
 });
 
-DEFAULTS(DefaultTTL("1h"), NAMESERVER_TTL("30m"))
+function FASTMAIL_MX(d) {
+  return [
+    MX(d, 10, "in1-smtp.messagingengine.com."),
+    MX(d, 20, "in2-smtp.messagingengine.com."),
+  ]
+}
+
+function FASTMAIL_DKIM(d) {
+  return [
+    CNAME("fm1._domainkey", "fm1." + d + ".dkim.fmhosted.com."),
+    CNAME("fm2._domainkey", "fm2." + d + ".dkim.fmhosted.com."),
+    CNAME("fm3._domainkey", "fm3." + d + ".dkim.fmhosted.com."),
+    CNAME("mesmtp._domainkey", "mesmtp." + d + ".dkim.fmhosted.com.")
+  ]
+}
+
+var DMARC = DMARC_BUILDER({
+  policy: "none",
+  rua: [
+    "mailto:dmarc-reports@letnh.com"
+  ],
+  ruf: [
+    "mailto:dmarc-reports@letnh.com"
+  ]
+})
+
+DEFAULTS(DefaultTTL("30m"), NAMESERVER_TTL("30m"))
 
 D("letnh.com", REG_NONE, DnsProvider(DSP_HETZNER),
-  SPF
+  SPF,
+  DMARC,
+  FASTMAIL_MX("@"),
+  FASTMAIL_MX("*"),
+  FASTMAIL_DKIM("letnh.com")
 );
 
 D("hamsterapps.net", REG_NONE, DnsProvider(DSP_HETZNER),
-  SPF
+  SPF,
+  DMARC,
+  FASTMAIL_MX("@"),
+  FASTMAIL_MX("*"),
+  FASTMAIL_DKIM("hamsterapps.net")
 );
 
 D("letnh.dev", REG_NONE, DnsProvider(DSP_HETZNER)
 );
 
 D("letnh.xyz", REG_NONE, DnsProvider(DSP_HETZNER),
-  SPF
+  SPF,
+  DMARC,
+  FASTMAIL_MX("@"),
+  FASTMAIL_MX("*"),
+  FASTMAIL_DKIM("letnh.xyz")
 );
 
 D("nerdyhamster.net", REG_NONE, DnsProvider(DSP_HETZNER),
-  SPF
+  SPF,
+  DMARC,
+  FASTMAIL_MX("@"),
+  FASTMAIL_MX("*"),
+  FASTMAIL_DKIM("nerdyhamster.net")
 );
