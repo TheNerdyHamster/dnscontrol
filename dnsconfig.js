@@ -31,6 +31,13 @@ function FASTMAIL_DKIM(d) {
   ]
 }
 
+var WWW = [
+  A("@", "65.21.247.109"),
+  A("WWW", "65.21.247.109"),
+  AAAA("@", "2a01:4f9:c010:7469::1"),
+  AAAA("WWW", "2a01:4f9:c010:7469::1"),
+]
+
 var DMARC = DMARC_BUILDER({
   policy: "none",
   rua: [
@@ -46,6 +53,13 @@ DEFAULTS(DefaultTTL("30m"), NAMESERVER_TTL("30m"))
 D("letnh.com", REG_NONE, DnsProvider(DSP_HETZNER),
   SPF,
   DMARC,
+  WWW,
+  A("api", "65.21.247.109"),
+  AAAA("api", "2a01:4f9:c010:7469::1"),
+  A("wiki", "65.21.247.109"),
+  AAAA("wiki", "2a01:4f9:c010:7469::1"),
+  A("blog", "65.21.247.109"),
+  AAAA("blog", "2a01:4f9:c010:7469::1"),
   FASTMAIL_MX("@"),
   FASTMAIL_MX("*"),
   FASTMAIL_DKIM("letnh.com")
@@ -59,7 +73,16 @@ D("hamsterapps.net", REG_NONE, DnsProvider(DSP_HETZNER),
   FASTMAIL_DKIM("hamsterapps.net")
 );
 
-D("letnh.dev", REG_NONE, DnsProvider(DSP_HETZNER)
+D("letnh.dev", REG_NONE, DnsProvider(DSP_HETZNER),
+  WWW,
+  A("api", "65.21.247.109"),
+  AAAA("api", "2a01:4f9:c010:7469::1"),
+  A("wiki", "65.21.247.109"),
+  AAAA("wiki", "2a01:4f9:c010:7469::1"),
+  A("blog", "65.21.247.109"),
+  AAAA("blog", "2a01:4f9:c010:7469::1"),
+  A("dashboard", "65.21.247.109"),
+  AAAA("dashboard", "2a01:4f9:c010:7469::1")
 );
 
 D("letnh.xyz", REG_NONE, DnsProvider(DSP_HETZNER),
