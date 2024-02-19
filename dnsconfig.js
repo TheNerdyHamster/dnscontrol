@@ -9,7 +9,8 @@ D("letnh.com", REG_NONE, DnsProvider(DSP_HETZNER),
   A("@", "1.1.1.1")
 );
 
-D("hamsterapps.net", REG_NONE, DnsProvider(DSP_HETZNER)
+D("hamsterapps.net", REG_NONE, DnsProvider(DSP_HETZNER),
+  A("@", "1.1.1.1")
 );
 
 D("letnh.dev", REG_NONE, DnsProvider(DSP_HETZNER)
